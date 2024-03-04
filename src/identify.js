@@ -1,12 +1,12 @@
 const LETTER = /[a-zA-Z]/;
 const WHITESPACE = /\s+/;
-const NUMBER = /^[0-9]+$/;
+ const NUMBER = /^[0-9]+$/;
 const OPERATORS = ['+', '-', '*', '/', '%'];
 
 const isLetter = character => LETTER.test(character);
 
 const isWhitespace = character => WHITESPACE.test(character);
-
+ 
 const isNumber = character => NUMBER.test(character);
 
 const isOpeningParenthesis = character => character === '(';
@@ -28,5 +28,5 @@ module.exports = {
   isClosingParenthesis,
   isParenthesis,
   isQuote,
-  isOperator,
+  isOperator
 };

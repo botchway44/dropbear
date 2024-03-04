@@ -4,6 +4,7 @@ const { parseAndEvaluate } = require('../src');
 
 const fs = require('fs');
 
+// console.log("ARGS", process.argv)
 const [command, ...args] = process.argv.slice(2);
 
 if (!command) {
@@ -16,7 +17,17 @@ if (command.toLowerCase() === 'run') {
     if (error) {
       console.error(error);
     }
-    const result = parseAndEvaluate(file);
-    console.log(result);
+
+    console.log("FILE", file.split("\n"))
+
+    //little tweak, read the file line by line and process it
+    const lines  = file.split("\n")
+    for(line of lines){
+         const result = parseAndEvaluate(line);
+        console.log(result);
+    }
+
+    // const result = parseAndEvaluate(file);
+    // console.log(result);
   });
 }

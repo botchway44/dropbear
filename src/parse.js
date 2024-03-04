@@ -1,15 +1,41 @@
-const { isOpeningParenthesis, isClosingParenthesis } = require('./identify');
+const { isOpeningParenthesis, isClosingParenthesis, isParenthesis } = require('./identify');
 const { specialForms } = require('./special-forms');
 const { peek, pop } = require('./utilities');
 
 const parenthesize = (tokens) => {
 
-  return tokens
+  const token = pop(tokens);
+
+  if(isOpeningParenthesis(token.value)){
+
+    const expressions = [];
+
+    while(!isClosingParenthesis(peek(tokens).value)){
+      expressions.push(parenthesize(tokens));
+    }
+
+    pop(tokens);
+    return expressions;
+  }
+  return token;
 };
 
 const parse = (tokens) => {
 
-  const token = pop(tokens);
+  if(Array.isArray(tokens)){
+    const [first, ...rest] = tokens;
+    
+    // console.log("FIRST",first)
+    // console.log("REST",rest)
+
+    return {
+      type : "CallExpression",
+      name : first.value,
+       arguments : rest.map(parse)
+    }
+  }
+
+  const token = tokens;
 
   if(token.type === 'Number'){
     return {
@@ -22,6 +48,12 @@ const parse = (tokens) => {
     return {
       type : 'StringLiteral',
       value : token.value
+    }
+  }
+  if(token.type === 'Name'){
+    return {
+      type : 'Identifier',
+      name : token.value
     }
   }
 };

@@ -1,1 +1,4 @@
 (multiply (add 2 2 (subtract 4 2)))
+(set x 3)
+(multiply (add x 2 (subtract 4 x)))
+(multiply (add 2 1 2 (subtract 4 2)))
